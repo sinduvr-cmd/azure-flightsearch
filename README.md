@@ -1,2 +1,8 @@
 # Streamlit_Deploy1
-test
+
+#initially
+pip install -r requirements.txt
+
+
+#run cmd:
+streamlit run flight_search_app.py

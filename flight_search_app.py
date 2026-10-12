@@ -11,7 +11,7 @@ MONGO_URI = st.secrets["MONGO_URI"]
 
 client = MongoClient(MONGO_URI)
 
-db = client["streamlit_deploy"]
+db = client["flightapp"]
 
 airports_collection = db["airports"]
 searches_collection = db["searches"]
