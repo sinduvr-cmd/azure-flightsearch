@@ -3,6 +3,23 @@ import requests
 import json
 from datetime import datetime
 
+st.set_page_config(
+    page_title="Flight Search",
+    page_icon="✈️",
+    layout="centered"
+)
+
+required_secrets = ("SERP_API_KEY", "MONGO_URI")
+missing_secrets = [key for key in required_secrets if key not in st.secrets]
+
+if missing_secrets:
+    st.error(
+        "App configuration is incomplete. Add the following secrets in "
+        "Streamlit Community Cloud under Manage app > Settings > Secrets: "
+        + ", ".join(missing_secrets)
+    )
+    st.stop()
+
 API_KEY = st.secrets["SERP_API_KEY"]
 
 from pymongo import MongoClient
@@ -195,12 +212,6 @@ def fetch_flights(origin, destination, date):
         return f"Error: {str(e)}"
         return f"Error: {str(e)}"
 
-st.set_page_config(
-page_title="Flight Search",
-page_icon="✈️",
-layout="centered"
-)
-
 st.title("🌍 Real-Time Flight Information")
 
 st.write(
@@ -236,4 +247,3 @@ if st.button("Search Flights"):
             value=result,
             height=400
         )
-
