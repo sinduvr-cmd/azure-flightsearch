@@ -213,7 +213,6 @@ def fetch_flights(origin, destination, date):
 
     except Exception as e:
         return f"Error: {str(e)}"
-        return f"Error: {str(e)}"
 
 st.title("🌍 Real-Time Flight Information")
 
