@@ -3,14 +3,15 @@ import streamlit as st
 import requests
 import json
 from datetime import datetime
+from pymongo import MongoClient
 
 st.set_page_config(
     page_title="Flight Search",
     page_icon="✈️",
     layout="centered"
 )
-missing_secrets = [key for key in required_secrets if key not in st.secrets]
-# Read configuration from Azure App Service environment variables
+
+# Read configuration from Azure App Service
 required_settings = ("SERP_API_KEY", "MONGO_URI")
 
 missing_settings = [
@@ -25,11 +26,9 @@ if missing_settings:
     st.stop()
 
 API_KEY = os.environ["SERP_API_KEY"]
-
-from pymongo import MongoClient
-
 MONGO_URI = os.environ["MONGO_URI"]
 
+# MongoDB connection
 client = MongoClient(MONGO_URI)
 
 db = client["flightapp"]
