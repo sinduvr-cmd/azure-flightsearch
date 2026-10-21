@@ -9,6 +9,7 @@ st.set_page_config(
     page_icon="✈️",
     layout="centered"
 )
+missing_secrets = [key for key in required_secrets if key not in st.secrets]
 # Read configuration from Azure App Service environment variables
 required_settings = ("SERP_API_KEY", "MONGO_URI")
 
