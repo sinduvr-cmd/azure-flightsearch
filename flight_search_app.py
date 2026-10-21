@@ -1,3 +1,4 @@
+import os
 import streamlit as st
 import requests
 import json
@@ -8,23 +9,25 @@ st.set_page_config(
     page_icon="✈️",
     layout="centered"
 )
+# Read configuration from Azure App Service environment variables
+required_settings = ("SERP_API_KEY", "MONGO_URI")
 
-required_secrets = ("SERP_API_KEY", "MONGO_URI")
-missing_secrets = [key for key in required_secrets if key not in st.secrets]
+missing_settings = [
+    key for key in required_settings if not os.getenv(key)
+]
 
-if missing_secrets:
+if missing_settings:
     st.error(
-        "App configuration is incomplete. Add the following secrets in "
-        "Streamlit Community Cloud under Manage app > Settings > Secrets: "
-        + ", ".join(missing_secrets)
+        "Missing Azure application settings: "
+        + ", ".join(missing_settings)
     )
     st.stop()
 
-API_KEY = st.secrets["SERP_API_KEY"]
+API_KEY = os.environ["SERP_API_KEY"]
 
 from pymongo import MongoClient
 
-MONGO_URI = st.secrets["MONGO_URI"]
+MONGO_URI = os.environ["MONGO_URI"]
 
 client = MongoClient(MONGO_URI)
 
